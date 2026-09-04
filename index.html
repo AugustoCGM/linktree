@@ -303,26 +303,6 @@
     window.addEventListener('mousemove', moveGlows);
     window.addEventListener('touchmove', moveGlows, { passive: true });
 
-    // 3. Haptic UI API: Cria um som de "pop" físico super polido ao clicar nos botões
-    function playHapticPop() {
-      const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      const oscillator = audioCtx.createOscillator();
-      const gainNode = audioCtx.createGain();
-      
-      oscillator.type = 'sine';
-      oscillator.frequency.setValueAtTime(800, audioCtx.currentTime);
-      oscillator.frequency.exponentialRampToValueAtTime(40, audioCtx.currentTime + 0.1);
-      
-      gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
-      gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
-      
-      oscillator.connect(gainNode);
-      gainNode.connect(audioCtx.destination);
-      
-      oscillator.start();
-      oscillator.stop(audioCtx.currentTime + 0.1);
-    }
-
     document.querySelectorAll('.haptic-btn').forEach(btn => {
       btn.addEventListener('pointerdown', () => {
         try { playHapticPop(); } catch(e) {}

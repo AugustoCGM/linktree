@@ -196,7 +196,7 @@
       <!-- Aredu -->
       <a href="https://www.instagram.com/aredutecnologia?igsi=MTl1aDZ2MHpzdDY2ag==" target="_blank" class="link-card haptic-btn" data-tilt data-tilt-max="8" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.15">
         <div class="link-info">
-          <img src="https://scontent.cdninstagram.com/v/t51.82787-19/779816656_17904343380509208_5254583169764981747_n.jpg?stp=dst-jpg_s150x150_tt6&_nc_cat=105&ccb=7-5&_nc_sid=f7ccc5&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=j8ET1c0yvB4Q7kNvwF-8vB7&_nc_oc=AdqfDw2tJ6Hc7pmtAl4RPeR4X0XvasStkm02U4-KiYJaWQdldLXWQKfHVjJk5uJkLyo&_nc_zt=24&_nc_ht=scontent.cdninstagram.com&_nc_gid=doQCFMJwqgyF9rh5It9z7Q&_nc_ss=7ba8c&oh=00_AQJMh3-vO4JTIJqr78_fEhCxF3jgTy0eHLwQ2KD_ZB2GYg&oe=6A9F5E32" alt="Aredu" class="link-icon">
+          <img src="https://avatars.githubusercontent.com/u/270325581?s=200&v=4" alt="Aredu" class="link-icon">
           <div class="link-text">
             <h3>Aredu</h3>
             <p>Soluções de software modernas e acessíveis</p>
@@ -208,7 +208,7 @@
       <!-- JAM Labs -->
       <a href="https://www.instagram.com/jamlabsdev?igsi=MnVnc2wzczBtNXd4" target="_blank" class="link-card haptic-btn" data-tilt data-tilt-max="8" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.15">
         <div class="link-info">
-          <img src="https://scontent.cdninstagram.com/v/t51.82787-19/681859196_18102041689811411_5561066072415386440_n.jpg?stp=dst-jpg_s150x150_tt6&_nc_cat=106&ccb=7-5&_nc_sid=f7ccc5&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=SYVAUlx_F0UQ7kNvwEzpIbg&_nc_oc=AdoTjq3ALCafxNXfjdhe1n6LnILxVqRjUYgbcXS2rP5RnUDM0WMOVBxvshlP65Hk7uI&_nc_zt=24&_nc_ht=scontent.cdninstagram.com&_nc_gid=MPTylJG9peHDSLT47J7kfg&_nc_ss=7ba8c&oh=00_AQLJJ7tQUw5WYXt0MpK5PA1i6Z8aCUELLyLeg5QOeF0-Kw&oe=6A9F69B4" alt="Jam Labs" class="link-icon">
+          <img src="https://avatars.githubusercontent.com/u/320645069?s=200&v=4" alt="Jam Labs" class="link-icon">
           <div class="link-text">
             <h3>JAM Labs</h3>
             <p>Squad & desenvolvimento de software</p>
@@ -303,11 +303,33 @@
     window.addEventListener('mousemove', moveGlows);
     window.addEventListener('touchmove', moveGlows, { passive: true });
 
+    // 3. Haptic UI API: Cria um som de "pop" físico super polido ao clicar nos botões
+    function playHapticPop() {
+      const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const oscillator = audioCtx.createOscillator();
+      const gainNode = audioCtx.createGain();
+      
+      oscillator.type = 'sine';
+      oscillator.frequency.setValueAtTime(800, audioCtx.currentTime);
+      oscillator.frequency.exponentialRampToValueAtTime(40, audioCtx.currentTime + 0.1);
+      
+      gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
+      
+      oscillator.connect(gainNode);
+      gainNode.connect(audioCtx.destination);
+      
+      oscillator.start();
+      oscillator.stop(audioCtx.currentTime + 0.1);
+    }
+
     document.querySelectorAll('.haptic-btn').forEach(btn => {
       btn.addEventListener('pointerdown', () => {
         try { playHapticPop(); } catch(e) {}
       });
     });
   </script>
+</body>
+</html>
 </body>
 </html>
